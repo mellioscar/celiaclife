@@ -23,8 +23,8 @@ export default function HomeScreen() {
 // Estilos específicos para la pantalla de inicio
 const styles = StyleSheet.create({
   logo: {
-    width: 270, // Ancho fijo de 200px
-    height: 270, // Altura fija de 200px
+    width: 270, // Ancho fijo de 270px
+    height: 270, // Altura fija de 270px
     alignSelf: 'center',
     marginBottom: 20,
     borderRadius: 5, // Radio de borde de 5px

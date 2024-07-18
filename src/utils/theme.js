@@ -3,10 +3,10 @@ import { StyleSheet } from 'react-native';
 
 export const colors = {
   primary: '#2D6A4F', // Verde Oscuro
-  secondary: '#95D5B2', // Verde Claro
+  secondary: '#6BCB77', // Verde Claro
   accent: '#00A6FB', // Azul Claro
-  background: '#FAF5E4', // Beige
-  highlight: '#FFD700', // Amarillo
+  background: '#D2D3B5', // Beige
+  highlight: '#EFCB68', // Amarillo
   textPrimary: '#000000', // Negro para texto principal
   textSecondary: '#FFFFFF', // Blanco para texto secundario
 };
