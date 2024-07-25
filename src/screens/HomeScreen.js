@@ -1,44 +1,34 @@
 // src/screens/HomeScreen.js
-import React from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Image } from 'react-native';
-import { globalStyles, colors } from '../utils/theme';
+import React, { useRef, useEffect } from 'react';
+import { Text, Animated, ScrollView } from 'react-native';
+import { globalStyles } from '../utils/theme';
+import styles from '../utils/styles';
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    // Ejecutar la animación de Fade In
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 3000,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim]);
+
   return (
-    <View style={globalStyles.container}>
-      <Image
+    <ScrollView contentContainerStyle={[globalStyles.container, { paddingBottom: 80 }]}>
+      <Animated.Image
         source={require('../../assets/images/Logo-CeliacLife.png')}
-        style={styles.logo}
+        style={[styles.logo, { opacity: fadeAnim }]}
       />
-      <Text style={globalStyles.title}>Consejo Diario</Text>
-      {/* Aquí podrías renderizar el consejo diario */}
-      <TextInput style={styles.searchInput} placeholder="Buscar tiendas sin TACC" />
-      <View style={styles.buttonContainer}>
-        <Button title="Buscar" color={colors.primary} onPress={() => {}} />
-      </View>
-    </View>
+      <Text style={globalStyles.title}>CeliacLife</Text>
+      <Text style={[globalStyles.subtitle2, { textAlign: 'justify' }]}>
+        La Celiaquía es una enfermedad autoinmune en la que el gluten (trigo, avena, cebada y centeno) daña el intestino delgado. Pero vivir con celiaquía no tiene por qué ser complicado. Con CeliacLife, tu aliado diario, encontrarás tiendas con productos Sin TACC, recetas deliciosas y consejos prácticos para una vida plena y saludable.
+      </Text>
+      <Text style={[globalStyles.subtitle2, { textAlign: 'justify' }]}>
+        Transforma tu día a día, descubre nuevas opciones y vive sin límites. ¡Únete a CeliacLife y lleva una vida sin gluten con estilo y facilidad!
+      </Text>
+    </ScrollView>
   );
 }
-
-// Estilos específicos para la pantalla de inicio
-const styles = StyleSheet.create({
-  logo: {
-    width: 270, // Ancho fijo de 270px
-    height: 270, // Altura fija de 270px
-    alignSelf: 'center',
-    marginBottom: 20,
-    borderRadius: 5, // Radio de borde de 5px
-  },
-  searchInput: {
-    height: 40,
-    borderColor: colors.secondary,
-    borderWidth: 1,
-    paddingLeft: 8,
-    marginBottom: 16,
-    width: '100%', // Hacer que el campo de búsqueda ocupe el 100% del ancho del contenedor
-  },
-  buttonContainer: {
-    marginTop: 16,
-    width: '100%', // Hacer que el contenedor del botón ocupe el 100% del ancho del contenedor
-  },
-});

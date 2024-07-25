@@ -1,8 +1,8 @@
 // src/redux/store.js
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from './slices/userSlice';
-import tipsReducer from './slices/tipsSlice';
-import recipesReducer from './slices/recipesSlice';
+import userReducer from './slices/UserSlice'; // Asegúrate de que la ruta es correcta
+import tipsReducer from './slices/tipsSlice'; // Asegúrate de que la ruta es correcta
+import recipesReducer from './slices/recipesSlice'; // Asegúrate de que la ruta es correcta
 import { firebaseApi } from '../services/firebaseApi';
 
 // Configurar la tienda de Redux con los reducers y middleware correspondientes

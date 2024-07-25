@@ -1,28 +1,33 @@
-// src/redux/slices/userSlice.js
+// src/redux/slices/UserSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
-// Estado inicial para el slice de usuario
-const initialState = {
-  name: '',
-  birthdate: '',
-  email: '',
-  photo: '',
-};
-
-// Crear el slice de usuario con las acciones y reducers correspondientes
-const userSlice = createSlice({
+export const userSlice = createSlice({
   name: 'user',
-  initialState,
+  initialState: {
+    value: {
+      user: null,
+      token: null,
+      localId: null,
+      imageCamera: null,
+    },
+  },
   reducers: {
-    setUser(state, action) {
-      state.name = action.payload.name;
-      state.birthdate = action.payload.birthdate;
-      state.email = action.payload.email;
-      state.photo = action.payload.photo;
+    setUser: (state, { payload }) => {
+      state.value.user = payload.email;
+      state.value.token = payload.idToken;
+      state.value.localId = payload.localId;
+    },
+    clearUser: (state) => {
+      state.value.user = null;
+      state.value.token = null;
+      state.value.localId = null;
+      state.value.imageCamera = null;
+    },
+    setCameraImage: (state, { payload }) => {
+      state.value.imageCamera = payload;
     },
   },
 });
 
-// Exportar las acciones y el reducer del slice de usuario
-export const { setUser } = userSlice.actions;
+export const { setUser, clearUser, setCameraImage } = userSlice.actions;
 export default userSlice.reducer;

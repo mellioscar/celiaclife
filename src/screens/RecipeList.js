@@ -1,19 +1,22 @@
-// src/screens/TipsScreen.js
+// src/screens/RecipeList.js
 import React, { useState, useRef } from 'react';
 import { View, Text, FlatList } from 'react-native';
-import { useGetTipsQuery } from '../services/firebaseApi';
-import Animated, { useSharedValue } from 'react-native-reanimated';
+import { useRoute } from '@react-navigation/native';
+import { useGetRecipesByCategoryQuery } from '../services/firebaseApi';
+import { useSharedValue } from 'react-native-reanimated';
 import styles from '../utils/styles';
-import TipItem from './TipItem';
+import RecipeItem from './RecipeItem';
 
-const TipsScreen = () => {
-  const { data: tips, error, isLoading } = useGetTipsQuery();
-  const [visibleTips, setVisibleTips] = useState(10);
+const RecipeList = () => {
+  const route = useRoute();
+  const { category, subcategory } = route.params || {};
+  const { data, error, isLoading } = useGetRecipesByCategoryQuery({ category, subcategory });
+  const [visibleRecipes, setVisibleRecipes] = useState(10);
   const viewableItems = useSharedValue([]);
   const flatListRef = useRef(null);
 
   const handleLoadMore = () => {
-    setVisibleTips((prevVisibleTips) => prevVisibleTips + 10);
+    setVisibleRecipes((prevVisibleRecipes) => prevVisibleRecipes + 10);
   };
 
   const onViewableItemsChanged = ({ viewableItems: vItems }) => {
@@ -21,16 +24,17 @@ const TipsScreen = () => {
   };
 
   if (isLoading) return <Text>Cargando...</Text>;
-  if (error) return <Text>Error al Cargar Consejos!</Text>;
+  if (error) return <Text>Error al cargar recetas!</Text>;
+  if (!data || data.length === 0) return <Text>No hay recetas disponibles</Text>;
 
   return (
     <View style={styles.container}>
       <FlatList
         ref={flatListRef}
-        data={tips.slice(0, visibleTips)}
+        data={data.slice(0, visibleRecipes)}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => (
-          <TipItem item={item} index={index} viewableItems={viewableItems} />
+          <RecipeItem item={item} index={index} viewableItems={viewableItems} category={category} />
         )}
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={{
@@ -44,4 +48,4 @@ const TipsScreen = () => {
   );
 };
 
-export default TipsScreen;
+export default RecipeList;

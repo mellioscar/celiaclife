@@ -2,13 +2,15 @@
 import { StyleSheet } from 'react-native';
 
 export const colors = {
-  primary: '#2D6A4F', // Verde Oscuro
-  secondary: '#6BCB77', // Verde Claro
-  accent: '#00A6FB', // Azul Claro
-  background: '#D2D3B5', // Beige
-  highlight: '#EFCB68', // Amarillo
-  textPrimary: '#000000', // Negro para texto principal
-  textSecondary: '#FFFFFF', // Blanco para texto secundario
+  primary: '#2D6A4F',
+  secondary: '#6BCB77',
+  terciary: '#375C51',
+  accent: '#87B8E4',
+  background: '#D2D3B5',
+  highlight: '#EFCB68',
+  textPrimary: '#000000',
+  textSecondary: '#FFFFFF',
+  error: '#B00020',
 };
 
 export const fonts = {
@@ -26,17 +28,24 @@ export const globalStyles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: colors.primary,
-    fontFamily: fonts.bold,
+    fontFamily: 'JosefinSans-Bold',
+    marginBottom: 10,
   },
   subtitle: {
     fontSize: 18,
     color: colors.secondary,
-    fontFamily: fonts.primary,
+    fontFamily: 'JosefinSans-Regular',
+  },
+  subtitle2: {
+    fontSize: 20,
+    color: colors.terciary,
+    fontFamily: 'JosefinSans-Regular',
+    marginBottom: 6,
   },
   text: {
     fontSize: 14,
     color: colors.textPrimary,
-    fontFamily: fonts.primary,
+    fontFamily: 'JosefinSans-Regular',
   },
   button: {
     backgroundColor: colors.primary,
@@ -45,7 +54,7 @@ export const globalStyles = StyleSheet.create({
   },
   buttonText: {
     color: colors.textSecondary,
-    fontFamily: fonts.primary,
-    fontSize: 16,
+    fontFamily: 'JosefinSans-Regular',
+    fontSize: 19,
   },
 });

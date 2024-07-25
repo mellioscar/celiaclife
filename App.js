@@ -1,12 +1,13 @@
-// App.js
+// /App.js
 import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts, JosefinSans_400Regular, JosefinSans_700Bold } from '@expo-google-fonts/josefin-sans';
 import store from './src/redux/store';
 import Navigation from './src/navigation/Navigation';
+import { AuthProvider } from './src/contexts/AuthContext';
+import { AppRegistry } from 'react-native';
 
-// Prevenir que la pantalla de splash se oculte automáticamente
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
@@ -22,12 +23,16 @@ export default function App() {
   }, [fontsLoaded]);
 
   if (!fontsLoaded) {
-    return null; // Mostrar pantalla en blanco mientras se cargan las fuentes
+    return null;
   }
 
   return (
     <Provider store={store}>
-      <Navigation />
+      <AuthProvider>
+        <Navigation />
+      </AuthProvider>
     </Provider>
   );
 }
+
+AppRegistry.registerComponent('main', () => App);

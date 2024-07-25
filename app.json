@@ -7,13 +7,25 @@
     "icon": "./assets/Icon-CeliacLife.png",
     "userInterfaceStyle": "light",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to let users take photos for their profile. / Esta aplicación utiliza la cámara para permitir a los usuarios tomar fotos para su perfil.",
+        "NSPhotoLibraryUsageDescription": "This app needs access to your photo library to let users select profile images. / Esta aplicación necesita acceso a tu biblioteca de fotos para permitir a los usuarios seleccionar imágenes de perfil.",
+        "NSLocationWhenInUseUsageDescription": "This app uses your location to show your current position on the map. / Esta aplicación usa tu ubicación para mostrar tu posición actual en el mapa."
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/Icon-CeliacLife.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "CAMERA",
+        "WRITE_EXTERNAL_STORAGE",
+        "READ_EXTERNAL_STORAGE",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"

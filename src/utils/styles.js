@@ -23,6 +23,10 @@ export default StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
+  selectedItemContainer: {
+    elevation: 10,
+    backgroundColor: colors.accent,
+  },
   title: {
     fontSize: 18,
     color: colors.textSecondary,
@@ -32,5 +36,89 @@ export default StyleSheet.create({
     fontSize: 14,
     color: colors.textSecondary,
     fontFamily: fonts.primary,
+    textAlign: 'justify',
+  },
+  logo: {
+    width: 270,
+    height: 270,
+    alignSelf: 'center',
+    marginBottom: 10,
+    marginTop: 70,
+  },
+  searchInput: {
+    height: 40,
+    borderColor: colors.secondary,
+    borderWidth: 1,
+    paddingLeft: 8,
+    marginBottom: 10,
+    width: '100%',
+  },
+  buttonContainer: {
+    marginTop: 1,
+    padding: 5,
+    width: '100%',
+  },
+  input: {
+    height: 40,
+    borderColor: colors.secondary,
+    borderWidth: 1,
+    paddingLeft: 8,
+    marginBottom: 16,
+    width: '100%',
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  halfInput: {
+    width: '48%',
+  },
+  errorText: {
+    color: colors.error,
+    fontSize: 12,
+  },
+  button: {
+    backgroundColor: colors.primary,
+    borderRadius: 5,
+    margin: 5,
+    padding: 5,
+  },
+  logoutButton: {
+    backgroundColor: colors.error,
+  },
+  buttonText: {
+    color: colors.textSecondary,
+    textAlign: 'center',
+    //fontFamily: 'JosefinSans-Regular',
+  },
+  image: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginTop: 10,
+    alignSelf: 'center',
+  },
+  profileImage: {
+    height: 200,
+    width: 200,
+    borderRadius: 100,
+    marginTop: 5,
+    alignSelf: 'center',
+  },
+  profileIcon: {
+    height: 200,
+    width: 200,
+    alignSelf: 'center',
+  },
+  imageButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  imageButton: {
+    flex: 1,
+    backgroundColor: colors.primary,
+    padding: 5,
+    borderRadius: 5,
+    marginHorizontal: 5,
   },
 });

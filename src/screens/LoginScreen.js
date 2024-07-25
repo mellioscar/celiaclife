@@ -1,80 +1,91 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../redux/slices/authSlice';
-import * as yup from 'yup';
-
-// Esquema de validación de yup
-const validationSchema = yup.object().shape({
-  email: yup.string().email('Correo electrónico no válido').required('El correo electrónico es requerido'),
-  password: yup.string().min(6, 'La contraseña debe tener al menos 6 caracteres').required('La contraseña es requerida'),
-});
+import React, { useState, useEffect, useRef } from 'react';
+import { View, TextInput, Button, Text, Animated, Alert } from 'react-native';
+import { useAuth } from '../contexts/AuthContext';
+import { globalStyles, colors } from '../utils/theme';
+import styles from '../utils/styles';
 
 const LoginScreen = ({ navigation }) => {
+  const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState({});
-  const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.auth);
+  const [error, setError] = useState('');
+  const fadeAnim = useRef(new Animated.Value(0)).current; 
+
+  useEffect(() => {
+    // Ejecutar la animación de Fade In
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 2500,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim]);
+
+  const mapAuthError = (errorCode) => {
+    switch (errorCode) {
+      case 'INVALID_LOGIN_CREDENTIALS':
+        return 'Credenciales de inicio de sesión inválidas';
+      case 'EMAIL_NOT_FOUND':
+        return 'Correo electrónico no encontrado';
+      case 'INVALID_PASSWORD':
+        return 'Contraseña incorrecta';
+      case 'INVALID_EMAIL':
+        return 'Email incorrecto';
+      case 'USER_DISABLED':
+        return 'Usuario deshabilitado';
+      default:
+        return 'Error desconocido. Por favor, intenta de nuevo.';
+    }
+  };
 
   const handleLogin = async () => {
     try {
-      await validationSchema.validate({ email, password });
-      dispatch(loginUser({ email, password }));
-    } catch (err) {
-      setErrors({ [err.path]: err.message });
+      await login(email, password);
+      navigation.navigate('Home');
+    } catch (error) {
+      const errorMessage = mapAuthError(error.message);
+      Alert.alert('Error de inicio de sesión', errorMessage);
+      setError(errorMessage);
     }
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Iniciar Sesión</Text>
+    <View style={globalStyles.container}>
+      <Animated.Image
+        source={require('../../assets/images/Logo-CeliacLife.png')}
+        style={[styles.logo, { opacity: fadeAnim }]}
+      />
+      <Text style={globalStyles.title}>Inicio de Sesión</Text>
       <TextInput
         style={styles.input}
-        placeholder="Correo Electrónico"
+        placeholder="Email"
         value={email}
         onChangeText={setEmail}
+        keyboardType="email-address"
+        autoCapitalize="none"
       />
-      {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
       <TextInput
         style={styles.input}
-        placeholder="Contraseña"
+        placeholder="Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
       />
-      {errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
-      <Button title="Iniciar Sesión" onPress={handleLogin} />
-      {loading && <Text>Cargando...</Text>}
-      {error && <Text>Error: {error}</Text>}
-      <Button title="Ir a Registrarse" onPress={() => navigation.navigate('Register')} />
+      <View style={styles.buttonContainer}>
+        <Button
+          title="Iniciar Sesión"
+          color={colors.primary}
+          onPress={handleLogin}
+        />
+      </View>
+      <View style={styles.buttonContainer}>
+        <Button
+          title="Registrarse"
+          color={colors.primary}
+          onPress={() => navigation.navigate('Signup')}
+        />
+      </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    marginBottom: 16,
-  },
-  input: {
-    width: '100%',
-    padding: 8,
-    marginVertical: 8,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 4,
-  },
-  errorText: {
-    color: 'red',
-    fontSize: 12,
-  },
-});
 
 export default LoginScreen;
